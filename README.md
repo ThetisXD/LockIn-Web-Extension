@@ -9,6 +9,7 @@
 <h2 align-"left">✨ What does it do?</h2>
 <p align="left">The LockIn Web Extension allows users to customize how they set up time, with three modes: standard countdown timer, pomodoro, and standard clock. In addition, LockIn has tab blacklists features that allow users to blacklist and prevent users from accessing certain blacklist sites.</p>
 
+
 ###
 <h4 align="left">⌛ 1. Countdown</h4>
 <p align="left">the user set up the time, and the timer will count down until it hit 0.</p>
@@ -26,13 +27,18 @@
 ###
 
 <h2 align-"left">✨ Tab Blacklist feature</h2>
-<p align="left">The web extension scans the user current browser and display all current avaliable tab. After, the user can select which tab they do not want to be blacklisted, any blacklisted tabs will automatically be restricted, prevent the user from accessing certain site. </p>
+<p align="left">The web extension scans the user's current browser and displays any blacklisted tabs the user has last saved. If not available, the system displays all current available tabs. After that, the user can select which tab they do not want blacklisted. Any blacklisted tabs will automatically be restricted, preventing the user from accessing certain sites, and the user can reset the blacklist and start over </p>
 
 
 
+<h2 align="left">✨ How to install?</h2>
+<ul align="left">
+  <li>1. Open the web extension on either Google chrome, Microsoft Edge, or Opera. </li>
+  <li>2. Turn on the developer mode and import unloaded package</li>
+  <li>3. Click the web extension icon and click the side panel to turn on LockIn Web Extension</li>
+</ul>
 
-
-<h2 align-"left">✨privacy and permissions</h2>
+<h2 align="left">✨privacy and permissions disclaimer</h2>
 
 
 <h4 align="left">Purpose</h4>
