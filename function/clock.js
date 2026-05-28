@@ -407,7 +407,7 @@ async function next_cycle(data) {
             
 
             //Update the current with the next checkpoint of the next break by another full work hour including break gaps.
-            const subsequent_next_break = pomodoro.break_end - work_in_seconds;
+            let subsequent_next_break = pomodoro.break_end - work_in_seconds;
             if(subsequent_next_break <= 0) subsequent_next_break = 0;
 
            
