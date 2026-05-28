@@ -408,14 +408,14 @@ html, body {
 }
 
 .upcoming-time {
-  font-family: var(--custom-font);
+  font-family: var(--default-font);
   font-weight: bold;
   font-size: 1.05rem;
   color: var(--default-blue);
 }
 
 .clock-time {
-  font-family: var(--custom-font);
+  font-family: var(--default-font);
   font-weight: bold;
   font-size: 1.05rem;
   color: var(--success-green);
