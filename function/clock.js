@@ -97,8 +97,10 @@ async function stopTimer() {
     await chrome.storage.local.set({ isActive: false });
 }
 
-function is_valid_input(total_session = 0, per_hr_session = 0, minute_break = 0)
+function is_valid_input(total_session = 1, per_hr_session = 1, minute_break = 1)
 {
+   //if the timer is ongoing, return.
+    if(total_session != 0) return;
     if(total_session < per_hr_session)
     {
         show_announcement(true, {
