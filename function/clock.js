@@ -112,7 +112,7 @@ function is_valid_input(total_session = 0, per_hr_session = 0, minute_break = 0)
     {
         show_announcement(true, {
                 title: "WARNING",
-                description: "Please setup your work session"
+                description: "Please setup your work session, or your work session must not be 0"
             }
         )
         return false;
@@ -121,7 +121,7 @@ function is_valid_input(total_session = 0, per_hr_session = 0, minute_break = 0)
     {
         show_announcement(true, {
                 title: "WARNING",
-                description: "Please set up your break time, and the hour session you want to work"
+                description: "Please set up your break time, and the hour session you want to work, or your break time must not be 0"
             }
         )
         return false;
@@ -130,7 +130,7 @@ function is_valid_input(total_session = 0, per_hr_session = 0, minute_break = 0)
     {
         show_announcement(true, {
                 title: "WARNING",
-                description: "Your minutes break must not be over 60."
+                description: "Your minutes break must not be over 59 minutes."
             }
         )
         return false;
