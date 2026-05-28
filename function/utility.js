@@ -4,22 +4,24 @@ let display_txt_mode = document.querySelector('.mode-display-trigger')
 import { split_total_second } from './clock.js';
 import { get_all_tab, clean_tab_URL } from './setting.js';
 
-function triggered_start_state(toggle)
+async function triggered_start_state(toggle)
 {
-    if (toggle == true) 
+    let data = await chrome.storage.local.get(["isActive"]);
+
+    if (toggle == true || data.isActive == true) 
     {
         disabled_btn.forEach((btn) => {
             btn.classList.add('btn-pressed');
-            btn.disabled = toggle;
+            btn.disabled = true;
         })
 
     }
 
-    if(toggle == false)
+    if(toggle == false || data.isActive == false)
     {
         disabled_btn.forEach((btn) => {
             btn.classList.remove('btn-pressed');
-            btn.disabled = toggle;
+            btn.disabled = false;
         })
     }
 }

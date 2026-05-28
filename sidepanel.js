@@ -62,7 +62,7 @@ body.addEventListener("click", async (event) => {
         await chrome.storage.local.set({ isActive: toggle });
 
         startBtn.textContent = toggle ? "STOP" : "START";
-        triggered_start_state(toggle);
+        await triggered_start_state(toggle);
 
         if (data.Time_Mode === "default" || data.Time_Mode === "pomodoro") {
 
@@ -234,3 +234,4 @@ loadData();
 render_clock();
 sync_any_toggles();
 await set_tooltip_bubble();
+await triggered_start_state();
