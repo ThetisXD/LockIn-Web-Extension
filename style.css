@@ -411,7 +411,7 @@ html, body {
   font-family: var(--default-font);
   font-weight: bold;
   font-size: 1.05rem;
-  color: var(--default-blue);
+  color: var(--background-text);
 }
 
 .clock-time {

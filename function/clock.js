@@ -97,7 +97,7 @@ async function stopTimer() {
     await chrome.storage.local.set({ isActive: false });
 }
 
-function check_session(total_session, per_hr_session)
+function is_valid_input(total_session = 0, per_hr_session = 0, minute_break = 0)
 {
     if(total_session < per_hr_session)
     {
@@ -106,15 +106,37 @@ function check_session(total_session, per_hr_session)
                 description: "Your total hour of session must not be less than your hour work session."
             }
         )
-        return;
-    } else if (per_hr_session == 0)
+        return false;
+    } 
+    else if (per_hr_session <= 0)
     {
-         show_announcement(true, {
+        show_announcement(true, {
+                title: "WARNING",
+                description: "Please setup your work session"
+            }
+        )
+        return false;
+    } 
+    else if (minute_break <= 0)
+    {
+        show_announcement(true, {
                 title: "WARNING",
                 description: "Please set up your break time, and the hour session you want to work"
             }
         )
+        return false;
     }
+    else if (minute_break > 59)
+    {
+        show_announcement(true, {
+                title: "WARNING",
+                description: "Your minutes break must not be over 60."
+            }
+        )
+        return false;
+    }
+    
+    return true;
 }
 
 //======================================================================================================================
@@ -126,6 +148,8 @@ async function initiate_pomo_start(total_second = 0) {
 
     const minutes_break = parseInt(min_input.value) || 0;
     const work_hour = parseInt(hr_input.value) || 0;
+
+    if(!is_valid_input(total_second, work_hour, minutes_break)) return;
 
     const work_sec = work_hour * 3600;
     const break_sec = minutes_break * 60;
