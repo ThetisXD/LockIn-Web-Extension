@@ -301,7 +301,7 @@ async function take_snapshot_time(total_second) {
 
 
 let IntervalID = null;
-async function set_alarm(toggle = false)
+async function set_alarm(toggle = false, theend= false)
 {
     
     clearInterval(IntervalID);
@@ -316,14 +316,23 @@ async function set_alarm(toggle = false)
 
         await chrome.storage.local.set({set_urgency: true})
 
+        if(theend === true)
+        {
+            show_announcement(true, {
+                title: "TIME IS UP!",
+                description: "You reach to the end!"
+                })
+            return;
+        }
+
         show_announcement(true, {
-        title: "TIME IS UP!",
-        description: "You made it! Click the button below to begin your break duration."
+        title: "CHECKPOINT",
+        description: "Well done, you work hard! Click the button below to begin your break duration."
         })
         
         let proceed = document.querySelector(".proceed-btn")
         proceed.addEventListener("click", () => {
-        set_alarm(false)
+        set_alarm(false);
         })
 
         return;
@@ -332,7 +341,6 @@ async function set_alarm(toggle = false)
    
     show_announcement(false);
 }
-
 
 
 
@@ -372,8 +380,8 @@ async function next_cycle(data) {
 
     let current_state = pomodoro.state;
 
-    console.log("current state:" + current_state)
-   
+  
+  
     if(current_state == "working")
     {   
         // If the user is in working state. Check whethers the countdown timer has reach designated break time.
@@ -421,7 +429,6 @@ async function next_cycle(data) {
             return;
         }
     }
-
 }
 
 
@@ -473,6 +480,8 @@ async function computeClockYield(data) {
 
 
 
+
+
 async function render_clock() {
 
 
@@ -488,6 +497,13 @@ async function render_clock() {
 
         await handlePomodoroCycle(data);
         updateClockUI(isPomodoro);
+        
+        //when the clock reaches 0, reset.
+        if(data.Total_Second <= 0)
+        {
+            clear_interval()
+            set_alarm(true)
+        }
 
         const yieldResult = await computeClockYield(data);
         changeTime(yieldResult)
