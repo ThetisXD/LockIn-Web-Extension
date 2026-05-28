@@ -21,6 +21,9 @@ import {
 } from "./utility.js";
 
 
+/**@type {typeof import('chrome')} */
+
+
 // =================================================================================================
 // UI ANIMATION (example: Flip animation, digit updates)
 // =================================================================================================
@@ -199,6 +202,7 @@ async function counts(hour, minute, second, toggle = false, mode = "") {
     if (mode === "pomodoro") {
 
         await initiate_pomo_start(total_second);
+
     } else {
         await chrome.storage.local.set({
             Total_Second: total_second,
@@ -326,13 +330,15 @@ async function set_alarm(toggle = false, theend= false)
                 title: "TIME IS UP!",
                 description: "You reach to the end!"
                 })
-            return;
+            
+        } else {
+            show_announcement(true, {
+                title: "CHECKPOINT",
+                description: "Well done, you work hard! Click the button below to begin your break duration."
+                })
+        
         }
 
-        show_announcement(true, {
-        title: "CHECKPOINT",
-        description: "Well done, you work hard! Click the button below to begin your break duration."
-        })
         
         let proceed = document.querySelector(".proceed-btn")
         proceed.addEventListener("click", () => {
@@ -471,7 +477,13 @@ function updateClockUI(isPomodoro) {
 
 async function computeClockYield(data) {
     if (data.Time_Mode === "pomodoro" || data.Time_Mode === "default") {
+
         check_pomo_status(data);
+           
+           
+        //when the clock reaches 0, reset.
+        if(data.Total_Second <= 0 && data.isActive == true) set_alarm(true, true)
+        
         return parseInt(data.Total_Second) || 0;
     }
 
@@ -501,13 +513,7 @@ async function render_clock() {
 
         await handlePomodoroCycle(data);
         updateClockUI(isPomodoro);
-        
-        //when the clock reaches 0, reset.
-        if(data.Total_Second <= 0)
-        {
-            clear_interval()
-            set_alarm(true)
-        }
+     
 
         const yieldResult = await computeClockYield(data);
         changeTime(yieldResult)
