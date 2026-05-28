@@ -7,7 +7,7 @@
 ###
 
 <h2 align-"left">✨ What does it do?</h2>
-<p align="left">The LockIn Web Extension allows users to customize how they set up time, with three modes: standard countdown timer, pomodoro, and standard clock. In addition, LockIn has tab blacklists features that allow users to blacklist and prevent users from accessing certain blacklist sites.</p>
+<p align="left">The LockIn Web Extension allows users to customize how they set up time, with three modes: standard countdown timer, pomodoro, and standard clock. In addition, LockIn has tab blacklists features that allow users to blacklist and prevent users from accessing certain blacklist sites. The timer and tab blacklist will continue to runs even if the sidepanel is close.</p>
 
 
 ###
@@ -58,7 +58,8 @@
 <ul align="left">
   <li>LockIn web extension do not records user sensitive content, form data and browsing history</li>
   <li>The tab permission is strictly require for blacklist tabs to be operational</li>
-  <li>The storage permission is only used to stored system essential functions and blacklists array.</li>
+  <li>The storage permission is used to stored system essential functions and blacklists array.</li>
+  <li>The storage permission is used to continuously track the timer and tab blacklist monitor, allowing the user to close and reopen the side panel without resetting progress.</li>
 </ul>
 
 
