@@ -1,0 +1,1053 @@
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
+/*=================================================================================================
+  Structure presets
+  =================================================================================================*/
+
+:root {
+  --bg-main: #0c0c0c;
+  --bg-panel: #141414;
+  --border-line: #1f1f1f; 
+
+  /*hover button*/
+  --btn-light-gray: #d9d9d9;
+  --btn-gray: #6b6b6b;
+  --btn-dark: #4a4a4a;
+
+  /*warning*/
+  --btn-warning: #871818;
+  --btn-warning-shadow: #821b2f;
+
+  /*text aesthetics*/
+  --primary-text: #ffffff;
+  --background-text: #555555;
+  --default-blue: #4a90e2;
+  --failure-red: #cb2727;
+  --success-green: #2ebd59;
+
+  /*custom font*/
+  --custom-font: 'Pixelify Sans', sans-serif;
+  --default-font: 'JetBrains Mono', monospace;
+
+}
+
+/*=================================================================================================
+  MAIN HUB LAYOUT
+  =================================================================================================*/
+
+html, body {
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  height: 100vh;
+
+  overflow: hidden; 
+  box-sizing: border-box;
+
+  background-color: var(--bg-main);
+  color: var(--primary-text);
+}
+
+
+.main_hub {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  /*vh (viewport height) and vw (viewport width) adapts regardless of screen or size resolution*/
+  height: 100vh;
+  max-height: 100vh;
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+
+
+/*--------------------------------------------------------------------------
+  ACCESSORY HEADER (Info + Feedback button + title )
+  --------------------------------------------------------------------------*/
+
+.accessory-container {
+  display: flex;
+  flex-shrink: 0;
+
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 14px 16px;
+
+  background-color: #121212;
+  border-bottom: 1px solid var(--border-line);
+
+  margin-bottom: 20px;
+}
+
+.pair-button {
+  display: flex;
+  gap: 6px;
+}
+
+.button-accessory {
+  font-family: var(--custom-font);
+  font-weight: bold;
+
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*--------------------------------------------------------------------------
+  DIGITS TIMER LAYOUT 
+  --------------------------------------------------------------------------*/
+
+.timer-container {
+  position: relative;
+
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  
+  padding: 20px 8px; 
+  background-color: #080808;
+  border-bottom: 1px solid var(--border-line); 
+}
+
+
+.pair-digit {
+  display: flex;
+  gap: 2px; /* Close alignment grid gaps for digits pairs */
+}
+
+.single-digit {
+  position: relative;
+  background-color: #161616;
+  border: none;
+
+  width: 32px;  
+  height: 48px; 
+
+  display: flex;
+  flex-direction: column;
+
+  border-radius: 3px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+
+  perspective: 300px; 
+}
+
+
+.overlaying-layer {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  padding: 1px 2px;
+  box-sizing: border-box;
+
+  top: -4px;
+  z-index: 5;
+}
+
+/*EACH DIGITS SECTIONS INCLUDING ITS LABEL
+---------------------------------------------------------------------------*/
+
+.digits-format-group {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  gap: 6px;
+}
+
+/*TWO DIGITS PAIRS
+---------------------------------------------------------------------------*/
+
+.input-pair-group {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}
+
+/*DIGIT FRAME
+---------------------------------------------------------------------------*/
+
+.single-digit {
+  position: relative;
+
+  width: 32px;
+  height: 48px;
+
+  color: var(--default-blue);
+  overflow: hidden;
+}
+
+/* A split divider across the digit. */
+.single-digit::before {
+  content: '';
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+
+  height: 1px;
+
+  background: rgba(0, 0, 0, 0.6);
+
+  transform: translateY(-50%);
+  z-index: 6;
+}
+
+/*DIGIT TEXTS & INPUTS
+---------------------------------------------------------------------------*/
+
+.overlaying-layer .digit {
+  width: 32px;
+  height: 48px;
+
+  background: transparent;
+  border: none;
+  outline: none;
+
+  padding: 0;
+  margin: 0;
+
+  box-sizing: border-box;
+
+  font-family: var(--timer-font);
+  font-size: 2.2rem;
+  font-weight: bold;
+  line-height: 48px;
+
+  text-align: center;
+  color: var(--accent-blue);
+
+  caret-color: transparent;
+}
+
+/*LABELS DIGIT FOR HR, MIN, SEC
+---------------------------------------------------------------------------*/
+
+.digit-txt {
+  font-family: var(--custom-font);
+  font-size: 0.56rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--background-text);
+
+  display: flex;
+  align-items: flex-end;
+   z-index: 2;
+}
+
+
+/*COLONS SEPARATOR BETWEEN HR, MIN, SEC FRAME
+---------------------------------------------------------------------------*/
+
+.colon-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: var(--default-font);
+  font-size: 1.3rem;
+  font-weight: bold;
+
+  position: relative;
+  right: 10px;
+  z-index: 3;
+  color: #262626;
+}
+
+/*--------------------------------------------------------------------------
+  DIGITS FLIP ANIMATION
+  --------------------------------------------------------------------------*/
+
+.single-digit input.digit {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: background-color 0.15s ease;
+}
+
+@keyframes flip-page {
+    0% {
+        transform: rotateX(0deg);
+        filter: brightness(1);
+    }
+    50% {
+       
+        transform: rotateX(90deg);
+        filter: brightness(0.50);
+    }
+    100% {
+        transform: rotateX(0deg);
+        filter: brightness(1);
+    }
+}
+
+.flip-animate {
+    animation: flip-page 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center center; 
+}
+
+
+
+/* ==========================================================================
+   5. MODE TIMER SELECTOR 
+   ========================================================================== */
+
+.mode-container {
+  flex-shrink: 0;
+  padding: 16px 16px;
+  background-color: #0a0a0a;
+  border-top: 1px solid var(--border-line); 
+}
+   
+
+/* Left & Right Mechanical Pagination Arrow Anchors */
+.nav-cycle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  cursor: pointer;
+
+  font-size: 0.75rem;
+  transition: color 0.15s ease;
+}
+
+.mode-display-trigger {
+  padding: 8px 0;
+  border-radius: 3px;
+
+  flex-grow: 1; 
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+
+.mode-display-trigger {
+
+  font-weight: bold;
+  font-size: 0.82rem;
+  color: var(--primary-text);
+  font-family: var(--custom-font);
+
+  cursor: pointer;
+  text-align: center;
+  text-transform: uppercase;
+
+  background-color: var(--btn-gray);
+
+}
+
+.switch-mode-group {
+  display: flex;
+  border-radius: 4px;
+  background-color: #111111;
+  border: 1px solid var(--border-line);
+  width: 100%;
+}
+
+/*--------------------------------------------------------------------------
+  POMODORO MODE
+  --------------------------------------------------------------------------*/
+
+.pomodoro_space_occupation {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  position: relative;
+  width: 100%;
+}
+
+
+.pomo-container {
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-line);
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin: 16px;
+  box-sizing: border-box;
+
+
+  z-index: 1;
+  /*Forces both the inputs pomodoro and display pomodoro to occupy the same space */
+  grid-area: 1 / 1; 
+  position: relative;
+
+  will-change: transform, opacity;
+}
+
+/*Become active state*/
+.pomo-container.active-session-mode {
+  display: block;
+  
+}
+
+.upcoming-time {
+  font-family: var(--custom-font);
+  font-weight: bold;
+  font-size: 1.05rem;
+  color: var(--default-blue);
+}
+
+.clock-time {
+  font-family: var(--custom-font);
+  font-weight: bold;
+  font-size: 1.05rem;
+  color: var(--success-green);
+}
+
+
+/*POMODORO MODE TRANSITIONS STATE ( DISPLAY <--> INPUTS )
+  --------------------------------------------------------------------------*/
+
+#pomodoro-display-mode,
+#pomodoro-input-mode {
+    opacity: 0;
+    /* Pushes it down AND slightly flattens the vertical scale on the GPU layer */
+    transform: translateY(20px) scaleY(0.95);
+    transform-origin: top center; /* Makes it expand downwards naturally */
+    visibility: hidden;
+    
+    overflow: hidden;
+    pointer-events: none;
+
+    transition:
+      opacity 0.35s ease,
+      transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+      visibility 0s linear 0.35s;
+}
+
+#pomodoro-display-mode.visible,
+#pomodoro-input-mode.visible {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+    visibility: visible;
+    pointer-events: auto;
+
+    max-height: 500px;
+    z-index: 2;
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+      max-height 0.4s ease,
+      visibility 0s linear 0s; 
+}
+
+
+/*POMODORO MODE INPUT STATE
+  --------------------------------------------------------------------------*/
+
+#pomodoro-input-mode input {
+  width: 55px;
+  margin-top: 6px;
+  padding: 0;
+
+  background: transparent;
+  border: none;
+  border-bottom: 2px dashed var(--border-line);
+
+  color: var(--accent-blue);
+  font: bold 1.1rem 'JetBrains Mono', monospace;
+  text-align: center;
+
+  outline: none;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+    CONTROL STATE
+   ========================================================================== */
+
+.control-panel {
+  padding: 14px;
+  background-color: #111111;
+  border-top: 1px solid var(--border-line);
+  margin-top: auto; /* Secure anchoring layout forces panels to sit at browser base line */
+}
+
+
+.action-row {
+  display: flex;
+  gap: 10px;
+  height: 40px; 
+}
+
+
+.start-btn {
+  flex-grow: 1.2; 
+  border: none;
+  color: #04140a;
+  background-color: var(--success-green);
+ 
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: var(--custom-font);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+/*STEPS BUTTON CONTROLS 
+  --------------------------------------------------------------------------*/
+.step-btn-container {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+
+  gap: 5px;
+  width: 64px; 
+}
+
+
+.step-btn {
+  height: 50%;
+  background-color: #1c1c1c;
+  color: var(--primary-text);
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
+/*--------------------------------------------------------------------------
+  ELEMENT READJUSTMENT 
+  --------------------------------------------------------------------------*/
+
+
+.horizontal-placement {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.vertical-placement {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.far_right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  text-align: right;
+}
+
+
+.pad-up {
+  margin-bottom: 4px;
+}
+
+.p {
+  margin: 15px 15px;
+}
+
+.others-setting-panel
+{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-top: 5px;
+}
+
+.adjacent.horizontal-placement
+{
+  gap: 2px;
+}
+/*
+ CLEAR TIMER WARNING HUES
+--------------------------------------------------------------------------*/
+
+.clear-timer-btn.btn-depth
+{
+  background-color: var(--btn-warning);
+  box-shadow: 0 4px 0 var(--btn-warning-shadow);
+}
+
+.clear-timer-btn.btn-depth:hover
+{
+  box-shadow: 0 4px 0 var(--btn-warning-shadow);
+}
+
+.clear-timer-btn.btn-depth:disabled {
+    background-color: rgb(171, 62, 62);
+}
+
+/*BUTTONS SETTING
+--------------------------------------------------------------------------*/
+
+.move-left {
+    display: flex;
+    gap: 20px;
+}
+
+.right-column-row
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.last-row-btn {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+/* ==========================================================================
+    SETTING TAB
+   ========================================================================== */
+
+   
+#settings-view {
+   
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-panel);
+
+    z-index: 20; 
+    padding: 16px;
+    box-sizing: border-box;
+    
+    /* Animation: Sliding into frame from the right */
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#settings-view.hidden {
+    transform: translateX(100%); /* Sliding out from the frame to the right. */
+    pointer-events: none;       
+}
+
+/*
+--------------------------------------------------------------------------
+ TAB CONTROLLERS
+--------------------------------------------------------------------------*/
+
+.tab-scroll-box {
+    flex: 1;
+    overflow-y: scroll;
+    max-height: calc(5 * 48px);
+    border: 1px solid var(--border-line);
+    border-radius: 4px;
+    margin: 20px 0;
+    background: rgba(0,0,0,0.2);
+}
+
+/*individuals container for each tabs*/
+.tab-item-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-line);
+}
+
+/*INDIVIDUAL TAB CONTAINER ELEMENTS
+--------------------------------------------------------------------------*/
+.tab-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.site-favicon {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+}
+
+.domain-brand {
+    font-size: 14px;
+    color: var(--primary-text);
+}
+
+/*TAB SCROLLER
+--------------------------------------------------------------------------*/
+
+.tab-scroll-box::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tab-scroll-box::-webkit-scrollbar-button {
+    display: none;
+}
+
+.tab-scroll-box::-webkit-scrollbar-track {
+    background: var(--btn-dark);
+    border-radius: 10px;
+ 
+}
+
+.tab-scroll-box::-webkit-scrollbar-thumb {
+    background: var(--btn-light-gray);
+    border-radius: 10px;
+    border: 2px solid rgba(0,0,0,0.2);
+}
+
+
+.tab-btns-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  margin-top: 12px;
+  padding: 10px 0;
+}
+
+/*SAVE CHANGES BUTTON 
+--------------------------------------------------------------------------*/
+
+.save-btn {
+    width: 100%;
+    height: 40px;
+    color: var(--primary-text);
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.save-btn.btn-depth {
+    background-color: var(--success-green);
+    box-shadow: 0 6px 0 #0e572a;
+    
+}
+
+.save-btn.btn-depth:hover {
+  box-shadow: 0 3px 0 #0e572a;
+}
+
+/*BUTTONS ROWS
+--------------------------------------------------------------------------*/
+
+#reset-session-btn, #reload-tabs
+{
+  font-size: 14px;
+  font-weight:bold;
+  height: 30px;
+}
+
+/*INFO ICON
+--------------------------------------------------------------------------*/
+
+.info-icon
+{
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.info-icon:hover
+{
+  color: var(--default-blue);
+  transition: color 0.05s ease-in-out;
+}
+/* ==========================================================================
+    3D DEPTH BUTTON 
+   ========================================================================== */
+
+
+.btn-depth {
+    background-color: var(--btn-gray);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 5px 0 var(--btn-dark);
+    transition: transform 0.1s, box-shadow 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/*3D BUTTON ANIMATION
+  --------------------------------------------------------------------------*/
+
+.btn-depth:hover {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--btn-dark);
+}
+
+.btn-depth:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+
+/*3D BUTTON DISABLED 
+  --------------------------------------------------------------------------*/
+
+.btn-pressed {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+.btn-depth:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: translateY(4px);
+    opacity: 0.6; 
+}
+
+.btn-depth:disabled:hover,
+.btn-depth:disabled:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+/*--------------------------------------------------------------------------
+  SLIDE TOGGLE
+  --------------------------------------------------------------------------*/
+
+
+
+/* 1. Hide default checkbox */
+.switch-latch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* 2. The Rail (Track) */
+.switch-latch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 22px;
+}
+
+.slider-rail {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--btn-dark); /* Grey when OFF */
+    transition: .4s;
+    border-radius: 22px; /* Makes it fully rounded */
+}
+
+/* 3. The Knob */
+.slider-rail:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%; /* Perfect circle */
+}
+
+/* 4. Active State (When checked) */
+.switch-latch input:checked + .slider-rail {
+    background-color: var(--success-green); /* Green when ON */
+}
+
+.switch-latch input:checked + .slider-rail:before {
+    transform: translateX(22px); /* Slides to the right */
+}
+
+
+/* ==========================================================================
+    ANNOUNCEMENT FLOATING MESSAGE
+   ========================================================================== */
+
+.announcement {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background-color: rgba(0, 0, 0, 0.6); 
+    
+    z-index: 55; 
+
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.announcement.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/*
+   ANNOUCEMENT TEXTS
+  --------------------------------------------------------------------------*/
+
+
+/* Modal Title Typographic Styles */
+.announcement .title {
+    font-weight: bold;
+    font-size: 1.1rem;
+
+    font-family: var(--custom-font);
+    color: var(--failure-red); 
+
+    text-transform: uppercase;
+    display: block;
+
+    margin-bottom: 10px;
+}
+
+.announcement .description {
+    font-size: 0.9rem;
+    color: var(--primary-text);
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Inner Dialog Content Frame Box */
+.announcement .vertical-placement {
+    background-color: var(--bg-panel, #1a1a1a);
+    padding: 20px;
+    width: 80%; /* Takes up standard inner column width proportion */
+    max-width: 280px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); /* Deep physical drop shadow layer */
+}
+
+
+.line {
+    opacity: 0.2;
+    margin-top: 8px;
+    margin-bottom: 14px;
+    width: 100%;
+}
+
+.dismiss-btn
+{
+  font-family: var(--custom-font);
+  font-weight: bold;
+  margin-top: 15px;
+  left: 0;
+  height: 40px;
+}
+
+
+/* ==========================================================================
+    TOOLTIP HELPS FLOATING MESSAGE
+   ========================================================================== */
+
+.tooltip-bubble {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 6px;
+    pointer-events: none;
+    
+    
+    max-width: 300px;        /* Set maximum width to contains the length of characters */
+    word-wrap: break-word;   /* Breaks long words if they exceed the max-width limits */
+    white-space: normal;    
+    
+   
+    transform: translate(-50%, -120%); 
+    transition: opacity 0.15s ease;
+    background: rgba(0, 0, 0, 0.85);
+    color: var(--primary-text);
+    z-index: 500;
+}
+
+/*--------------------------------------------------------------------------
+  MISCANCELLOUS 
+  --------------------------------------------------------------------------*/
+
+
+.display-msg {
+  font-family: var(--custom-font);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #777777;
+  font-weight: bold;
+}
+
+.common-btn
+{
+  width: 50px;
+  height: 42px;
+}
+
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.title {
+  font-size: 0.95rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.warning.title
+{
+  font-size: 1.3rem;
+}
+
+.setting.line
+{
+  margin-top: 16px;
+  margin-bottom: -10px;
+}
+
+.text-display
+{
+  font-family: var(--custom-font);
+  font-weight: bold;
+}

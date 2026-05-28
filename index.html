@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Lock In</title>
+</head>
+<body>
+
+    <div class="announcement hidden">
+        <div class="vertical-placement">
+            <span class="warning title"></span>
+            <hr class="line">
+            <p class="description" id="desc_text"></p>
+            <button class="dismiss-btn proceed-btn btn-depth">Got it!</button>
+        </div>
+    </div>
+    <div class="tooltip-bubble"></div>
+    <!--Main Hub-->
+    <main class="main_hub" id="main-view">
+        <div class="accessory-container">
+            <div class="title-wrapper">
+                <h3 class="title">LOCK IN</h3>
+            </div>
+            <div class="pair-button">
+                <button class="Setting-btn button-accessory btn-depth tip "  info-tip="Open a setting menu" aria-label="Open Settings">🌣</button>
+                <button class="Feedback-btn button-accessory btn-depth tip " info-tip="Open a feedback tab" aria-label="Open Feedback">F</button>
+            </div>
+        </div>
+
+        <div class="timer-container">
+          
+            <div class="overlaying-layer">
+                <div class="digits-format-group">
+                    <div class="input-pair-group tip" info-tip="Type integer down below [0-9] to modify the hours">
+                        <div class="single-digit">
+                            <input class="digit hr" id="text1" type="text" inputmode="numeric" min="0" max="9" maxlength="1" value="0">
+                        </div>
+                        <div class="single-digit">
+                            <input class="digit hr" id="text2" type="text" inputmode="numeric" min="0" max="9" maxlength="1" value="0">
+                        </div>
+                    </div>
+                    <span class="digit-txt">hr</span> 
+                </div>
+
+                <span class="colon-separator">:</span>    
+                
+                <div class="digits-format-group">
+                    <div class="input-pair-group tip" info-tip="Type integer down below [0-5/9] to modify the minutes">
+                        <div class="single-digit">
+                            <input class="digit min" id="text3" type="text" inputmode="numeric" min="0" max="5" maxlength="1" value="0">
+                        </div>
+                        <div class="single-digit">
+                            <input class="digit min" id="text4" type="text" inputmode="numeric" min="0" max="9" maxlength="1" value="0">
+                        </div>
+                    </div>
+                    <span class="digit-txt">min</span>
+                </div>
+                
+                <span class="colon-separator">:</span>  
+
+                <div class="digits-format-group">
+                    <div class="input-pair-group tip" info-tip="Type integer down below [0-5/9] to modify the seconds">
+                        <div class="single-digit">
+                            <input class="digit sec" id="text5" type="text" inputmode="numeric" min="0" max="5" maxlength="1" value="0">
+                        </div>
+                        <div class="single-digit">
+                            <input class="digit sec" id="text6" type="text" inputmode="numeric" min="0" max="9" maxlength="1" value="0">
+                        </div>
+                    </div>
+                    <span class="digit-txt">sec</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="pomodoro_space_occupation">
+            <div class="pomo-container active-session-mode" id="pomodoro-display-mode">
+                <div class="horizontal-placement"> 
+                    <div class="vertical-placement">
+                        <span class="text-display" id="status-msg">Next break in:</span>
+                        <span class="upcoming-time" id="hub-countdown-time">-------</span>
+                    </div>
+                    <div class="far_right">
+                        <span class="text-display">break time at:</span>
+                        <span class="clock-time" id="hub-goal-timestamp">-------</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pomo-container modifier-session-mode" id="pomodoro-input-mode">
+                <div class="horizontal-placement"> 
+                    <div class="vertical-placement">
+                        <span class="text-display">Break time <br> (in minutes)</span>
+                        <input class="pomo_minbr"id="min-break-input" type="text" placeholder="insert" inputmode="numeric" min="0" max="99" maxlength="2">
+                    </div>
+                    <div class="far_right">
+                        <span class="text-display">Work session <br> (in hours)</span>
+                        <input class="pomo_hrsession" id="hr-session-input" type="text" placeholder="insert" inputmode="numeric" min="0" max="9" maxlength="1">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="control-panel">
+            <div class="pad-up">
+                <span class="text-display">timer toggles</span>
+            </div>
+            <div class="action-row">
+                <button class="clear-timer-btn btn-depth common-btn">⟲</button>
+                <button class="start-btn btn-depth" id="initiate-start-btn">START</button>
+                <div class="step-btn-container">
+                    <button class="step-up-btn step-btn btn-depth" aria-label="Increase time">▲</button>
+                    <button class="step-down-btn step-btn btn-depth" aria-label="Decrease time">▼</button>
+                </div>
+                
+                
+            </div>
+            
+        </div>
+
+        <div class="mode-container">
+            <div class="pad-up">
+                <span class="text-display">Set timer mode</span>
+            </div>
+            <div class="switch-mode-group">
+                <button class="nav-cycle-btn btn-depth common-btn" id="mode-left-arrow">◀</button>
+                <button class="mode-display-trigger btn-depth common-btn tip" 
+                info-tip="Display the current timer mode. Click the pomodoro button to intiate the setup phase." 
+                id="mode-center-action">DEFAULT</button>
+                <button class="nav-cycle-btn btn-depth common-btn" id="mode-right-arrow">▶</button>
+
+            </div>
+        </div>
+    </main>
+
+    <!--Setting Tab-->
+    <div class="setting_hub hidden" id="settings-view">
+        <div class="accessory-container">
+            <div class="title-wrapper">
+               <h3 class="title">SETTING</h3>
+            </div>
+            
+            <div class="pair-button">
+                <button class="Return-btn button-accessory btn-depth" id="settings-close-btn">X</button>
+            </div>
+        </div>
+
+        <div class="tab-blocker-workspace">
+
+            <!-- Header -->
+            <div class="workspace-sub-header">
+                <span class="title">TABS BLACKLIST</span>
+                
+                <br>
+                <span class="subheading">Click the refresh button below to reload all your open tabs.</span>
+               
+                <hr class="setting line">
+            </div>
+
+            <!-- Scrollable Tabs List -->
+            <div class="tab-scroll-box" id="dynamic-blacklist-stream"></div>
+
+            <!-- Footer Container (Reload + Reset + Toggle) -->
+            <div class="tab-btns-container">
+
+                <!-- Left Column: Reload + Reset -->
+                <div class="move-left">
+                    <div class="vertical-placement">
+                        <div class="adjacent horizontal-placement">
+                            <span class="text-display">Refresh blacklist tabs</span>
+                            <span class="info-icon tip" info-tip="Refreshes the tabs that you last saved">ⓘ</span>
+                        </div>   
+                        <button class="reload_scan_tabs btn-depth" id="reload-tabs">Refresh</button>
+                    </div>
+
+                    <div class="vertical-placement">
+                        <span class="text-display">Reset</span>
+                        <button class="system-reset-btn btn-depth tip" 
+                        info-tip="Reset your last saved blacklist tabs." 
+                        id="reset-session-btn">Reset</button>
+                    </div>
+                </div>
+
+                <!-- Right Column: Toggle -->
+                <div class="right-column-row">
+                    <span class="footer-label text-display">Enable</span>
+                    <label class="switch-latch">
+                        <input type="checkbox" class="toggle-for-monitoring toggle-switch" data-target="is_monitor">
+                        <span class="slider-rail"></span>
+                    </label>
+                </div>
+
+            </div>
+
+            <!-- Save Button -->
+            <div class="last-row-btn">
+                <button class="save-btn btn-depth" aria-label="save blacklist tabs">SAVE</button>
+            </div>        
+        </div>
+
+        <hr class="setting line">
+        <br>
+
+        <h3 class="title p">OTHERS</h3>
+        <div class="others-setting-panel pad-up">   
+            <div class="horizontal-placement">
+                <span class="text-display">Volume</span>    
+                <div class="right-column-row">
+                    <span class="footer-label text-display">Enable</span>
+                    <label class="switch-latch">
+                        <input type="checkbox" class="toggle-for-volume toggle-switch" data-target="set_volume">
+                        <span class="slider-rail"></span>
+                    </label>
+                </div>
+            </div> 
+
+            <div class="horizontal-placement">
+                <span class="text-display">Tooltip helper</span>    
+                <div class="right-column-row">
+                    <span class="footer-label text-display">Enable</span>
+                    <label class="switch-latch">
+                        <input type="checkbox" class="toggle-for-tooltip toggle-switch" data-target="set_tooltip">
+                        <span class="slider-rail"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <script src="sidepanel.js" type="module" defer></script>
+</body>
+</html>
