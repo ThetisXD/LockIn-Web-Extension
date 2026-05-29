@@ -151,9 +151,7 @@ export async function transfer_user_to_site(url = "", range = [0, 10]) {
  * ===================================================================================
  */
 
-export function mode_changes_display(label) {
-    display_txt_mode.textContent = label;
-}
+
 
 function _format_time(dateObj) {
     return dateObj.toLocaleTimeString('en-US', {
