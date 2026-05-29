@@ -36,6 +36,14 @@ export function move_to_setting(toggle) {
  * DISPLAY & FORMATTING
  * ===================================================================================
  */
+
+
+function _format_time(dateObj) {
+    return dateObj.toLocaleTimeString('en-US', {
+        hour: 'numeric', minute: '2-digit', hour12: true
+    });
+}
+
 export function mode_changes_display(label) {
     display_txt_mode.textContent = label;
 }
@@ -47,9 +55,7 @@ export function next_break_time(remaining_second = 0, toggle = false) {
     current_time.setMilliseconds(0);
     current_time.setSeconds(current_time.getSeconds() + remaining_second);
 
-    next_break_display.textContent = current_time.toLocaleTimeString('en-US', {
-        hour: 'numeric', minute: '2-digit', hour12: true
-    });
+    next_break_display.textContent = _format_time(current_time);
 }
 
 /**
@@ -153,21 +159,6 @@ export async function transfer_user_to_site(url = "", range = [0, 10]) {
 
 
 
-function _format_time(dateObj) {
-    return dateObj.toLocaleTimeString('en-US', {
-        hour: 'numeric', minute: '2-digit', hour12: true
-    });
-}
-
-export function next_break_time(remaining_second = 0, toggle = false) {
-    if (!toggle) return;
-    const next_break_display = document.querySelector('#hub-goal-timestamp');
-    let current_time = new Date();
-    current_time.setMilliseconds(0);
-    current_time.setSeconds(current_time.getSeconds() + remaining_second);
-
-    next_break_display.textContent = _format_time(current_time);
-}
 
 
 export async function display_session_formats(total_Seconds, work_Hours, break_Minutes) {
