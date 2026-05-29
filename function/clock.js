@@ -40,8 +40,11 @@ function card_flip(textInput, newValue) {
     }
 }
 
-function split_total_second(total_second = 0) {
+function split_total_second(total_second = 0, wrap_std_hr = false)
+{
     let Hr = Math.floor(total_second / 3600);
+
+    if (wrap_std_hr) Hr = Hr % 24;
 
     let Remainder = total_second % 3600;
     let Min = Math.floor(Remainder / 60);
@@ -68,24 +71,21 @@ function format_hour(total_second, _12hr = false)
 }
 
 
-function changeTime(amount, standard=false) {
-
+function changeTime(amount = 0, use12Hour = false)
+{
     let get_digits = input_container.querySelectorAll('.digit');
 
-    let hour = format_hour(amount, standard) || "0";
+    let rest = split_total_second(amount, true);
 
-    let rest = split_total_second(amount);
+    let hour = format_hour(amount, use12Hour);
 
-    rest[0] = hour[0]
-    rest[1] = hour[1]
-
-    play_sound();
+    rest[0] = hour[0];
+    rest[1] = hour[1];
 
     get_digits.forEach((text, i) => {
         let update_text = rest[i] ?? "0";
         card_flip(text, update_text);
     });
-
 }
 
 
