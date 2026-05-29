@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Lock-In | Focus App",
   "version": "1.0",
-  "description": "Stay focused by blacklisting tabs and managing time",  
+  "description": "Stay focused and less distracted by blacklisting tabs and managing time",  
   "permissions": [
     "tabs",
     "storage",
