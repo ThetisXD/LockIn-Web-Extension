@@ -25,6 +25,7 @@ const default_data = {
     set_urgency: false,
     set_volume: true,
     set_tooltip: false,
+    set_standard_time: false,
 
     TabList: [],
     is_monitor: false,
@@ -73,6 +74,8 @@ function clean_tab_URL(tab) {
 }
 
 
+
+
 async function monitor_tabs() {
     let data = await chrome.storage.local.get(["TabList", "is_monitor"]);
     if(data.is_monitor == false) return;
@@ -106,6 +109,7 @@ async function monitor_tabs() {
 
 
 
+
 function clock_runtime()
 {
     
@@ -131,16 +135,16 @@ function clock_runtime()
          * Since clock is being computed in sidepanel.
          * check if the current mode is set to clock, do nothing 
         */
-        if(current_mode === "clock") {
+
+        if(current_mode == "clock") {
             monitor_tabs();
             return;
-        } 
-
+        }
+    
         if (current_mode == "default" || current_mode == "pomodoro")
         {
             if(total_sec <= 0 || data.isActive == false)
-            {
-                console.log("hello");
+            {   
                 clearInterval(intervalID)
                 await chrome.storage.local.set({isActive: false})
                 return;

@@ -21,8 +21,6 @@ import {
 } from "./utility.js";
 
 
-/**@type {typeof import('chrome')} */
-
 
 // =================================================================================================
 // UI ANIMATION (example: Flip animation, digit updates)
@@ -44,6 +42,7 @@ function card_flip(textInput, newValue) {
 
 function split_total_second(total_second = 0) {
     let Hr = Math.floor(total_second / 3600);
+
     let Remainder = total_second % 3600;
     let Min = Math.floor(Remainder / 60);
     let Sec = Remainder % 60;
@@ -56,16 +55,37 @@ function split_total_second(total_second = 0) {
     return combine_string.split("");
 }
 
-function changeTime(amount) {
-    let digit = split_total_second(amount);
+function format_hour(total_second, _12hr = false)
+{
+    let hrs = Math.floor(total_second / 3600) % 24;
+
+    if (!_12hr) { return hrs.toString().padStart(2, "0"); }
+           
+    let hr12 = hrs % 12;
+    if (hr12 === 0) hr12 = 12;
+
+    return hr12.toString().padStart(2, "0");
+}
+
+
+function changeTime(amount, standard=false) {
+
     let get_digits = input_container.querySelectorAll('.digit');
+
+    let hour = format_hour(amount, standard) || "0";
+
+    let rest = split_total_second(amount);
+
+    rest[0] = hour[0]
+    rest[1] = hour[1]
 
     play_sound();
 
     get_digits.forEach((text, i) => {
-        let update_text = digit[i] ?? "0";
+        let update_text = rest[i] ?? "0";
         card_flip(text, update_text);
     });
+
 }
 
 
@@ -100,10 +120,10 @@ async function stopTimer() {
     await chrome.storage.local.set({ isActive: false });
 }
 
-function is_valid_input(total_session = 1, per_hr_session = 1, minute_break = 1)
+function is_valid_input(total_session, per_hr_session, minute_break)
 {
    //if the timer is ongoing, return.
-    if(total_session !== 0) return;
+    if(total_session !== 0) return true;
     if(total_session < per_hr_session)
     {
         show_announcement(true, {
@@ -198,7 +218,7 @@ async function counts(hour, minute, second, toggle = false, mode = "") {
 
     total_second = getTotalSeconds(hour, minute, second);
 
-    
+   
     if (mode === "pomodoro") {
 
         await initiate_pomo_start(total_second);
@@ -208,6 +228,9 @@ async function counts(hour, minute, second, toggle = false, mode = "") {
             Total_Second: total_second,
             isActive: toggle
         });
+
+        
+    
     }
 }
 
@@ -263,6 +286,7 @@ async function clear_interval() {
 // =================================================================================================
 
 function clock_time() {
+
     const current_time = new Date();
     let hours = current_time.getHours() * 3600;
     let mins = current_time.getMinutes() * 60;
@@ -271,6 +295,25 @@ function clock_time() {
 }
 
 
+let intervalId = null;
+async function run_real_time() {
+    const data = await chrome.storage.local.get(["Time_Mode", "isActive", "set_standard_time"]);
+
+    const isStandard = data.set_standard_time || false;
+
+    clearInterval(intervalId);
+    intervalId = null;
+    
+    console.log(data.set_standard_time)
+    if (data.Time_Mode === "clock" && data.isActive === true) {
+        intervalId = setInterval(() => {
+            
+            changeTime(clock_time(), isStandard);
+            
+        }, 1000);
+
+    }
+}
 // =================================================================================================
 // POMODORO STORAGE AND MODIFICATION
 // =================================================================================================
@@ -476,6 +519,7 @@ function updateClockUI(isPomodoro) {
 }
 
 async function computeClockYield(data) {
+ 
     if (data.Time_Mode === "pomodoro" || data.Time_Mode === "default") {
 
         check_pomo_status(data);
@@ -485,10 +529,6 @@ async function computeClockYield(data) {
         if(data.Total_Second <= 0 && data.isActive == true) set_alarm(true, true)
         
         return parseInt(data.Total_Second) || 0;
-    }
-
-    if (data.Time_Mode === "clock") {
-        return clock_time();
     }
 
     return 0;
@@ -501,6 +541,7 @@ async function computeClockYield(data) {
 async function render_clock() {
 
 
+    //event reserved for pomodoros and countdown.
     chrome.storage.onChanged.addListener(async (clock, area) => {
         if (area !== "local") return;
 
@@ -513,14 +554,14 @@ async function render_clock() {
 
         await handlePomodoroCycle(data);
         updateClockUI(isPomodoro);
-     
-
+        
         const yieldResult = await computeClockYield(data);
         changeTime(yieldResult)
     }
 
     });
-
+    //event reserved for real time clock changes.
+    chrome.storage.onChanged.addListener(await run_real_time);
 }
 
 
@@ -567,7 +608,7 @@ export
     loadData, 
     clear_interval, 
     change_mode, 
-    clock_time, 
+    run_real_time,
     split_total_second, 
     take_snapshot_time, 
     next_cycle, 

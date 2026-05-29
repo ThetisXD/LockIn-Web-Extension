@@ -22,6 +22,7 @@ import {
     loadData,
     clear_interval,
     change_mode,
+    run_real_time,
     take_snapshot_time,
     render_clock
 } from "./function/clock.js";
@@ -44,6 +45,7 @@ import {
     toggle_monitoring,
     toggle_volume,
     toggle_tooltip,
+    toggle_stdrd_time
 } from "./function/setting.js";
 
 
@@ -86,6 +88,7 @@ body.addEventListener("click", async (event) => {
                 });
             }
 
+           
             await counts(
                 compile_string.substring(0, 2),
                 compile_string.substring(2, 4),
@@ -203,10 +206,11 @@ body.addEventListener("input", async (event) => {
 
 body.addEventListener("change", async (event) => {
     
-    // TOGGLE TAB MONITORING, VOLUME, TOOLTIP
+    // TOGGLE TAB MONITORING, VOLUME, TOOLTIP toggle_stdrd_time
     if (event.target.classList.contains("toggle-for-monitoring")) toggle_monitoring()
     if (event.target.classList.contains("toggle-for-volume")) toggle_volume()
     if (event.target.classList.contains("toggle-for-tooltip")) toggle_tooltip()
+    if (event.target.classList.contains("toggle-for-time")) toggle_stdrd_time()
 })
 // =================================================================================================
 // INITIAL DIGIT NORMALIZATION
@@ -233,5 +237,6 @@ body.addEventListener('DOMContentLoaded', (event) => {
 loadData();
 render_clock();
 sync_any_toggles();
+await run_real_time();
 await set_tooltip_bubble();
 await triggered_start_state();

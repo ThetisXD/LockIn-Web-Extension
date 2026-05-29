@@ -184,6 +184,15 @@ async function toggle_tooltip()
     await set_tooltip_bubble()
 }
 
+let toggs;
+async function toggle_stdrd_time()
+{
+    let data = await chrome.storage.local.get(["set_standard_time"]);
+    toggs = !data.set_standard_time
+    await chrome.storage.local.set({set_standard_time: toggs});
+
+}
+
 
 // =================================================================================================
 // SETTINGS ACTIONS (Save, Clear, Scan)
@@ -306,6 +315,7 @@ export {
     toggle_monitoring, 
     toggle_volume,
     toggle_tooltip,
+    toggle_stdrd_time,
     get_all_tab,
     clean_tab_URL
 };
