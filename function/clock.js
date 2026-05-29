@@ -75,15 +75,15 @@ function changeTime(amount = 0, use12Hour = false)
 {
     let get_digits = input_container.querySelectorAll('.digit');
 
-    let rest = split_total_second(amount, true);
+    let digits = split_total_second(amount, use12Hour);
 
     let hour = format_hour(amount, use12Hour);
 
-    rest[0] = hour[0];
-    rest[1] = hour[1];
+    digits[0] = hour[0];
+    digits[1] = hour[1];
 
     get_digits.forEach((text, i) => {
-        let update_text = rest[i] ?? "0";
+        let update_text = digits[i] ?? "0";
         card_flip(text, update_text);
     });
 }
